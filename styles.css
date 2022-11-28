@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
+
+@font-face {
+    font-family: "Abys";
+    src: url("fonts/Abys-Regular.woff") format("woff"),
+    url("fonts/Abys-Regular.woff2") format("woff2");
+}
+
+:root {
+    --dark-color: rgb(39,39,39);
+    --med-color: rgb(44,52,106);
+    --sec-color: rgb(225,240,106);
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--dark-color);
+    display: flex;
+    flex-direction: column;
+}
+
+header,
+footer {
+    font-family: 'Josefin Sans', sans-serif;
+    color: var(--sec-color);
+    padding: 20px;
+}
+
+header {
+    font-weight: 700;
+    font-size: 2em;
+    background-color: var(--med-color);
+
+    display: inherit;
+    justify-content: center;
+}
+
+main {
+    padding: 10px;
+
+    display: inherit;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+#game-container {
+    display: grid;
+    grid-template: repeat(3, max-content) / repeat(3, max-content);
+}
+
+.cells {
+    width: calc(100vw/4);
+    height: calc(100vw/3);
+
+    font-size: 7em;
+    font-family: "Abys", sans-serif;
+    color: var(--sec-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cells:first-child,
+.cells:nth-child(2),
+.cells:nth-child(4),
+.cells:nth-child(5) {
+    border-bottom: 3px solid var(--sec-color);
+    border-right: 3px solid var(--sec-color);
+}
+
+.cells:nth-child(3),
+.cells:nth-child(6) {
+    border-bottom: 3px solid var(--sec-color);
+}
+
+.cells:nth-child(7),
+.cells:nth-child(8) {
+    border-right: 3px solid var(--sec-color);
+}
+
+footer {
+    text-align: center;
+}
+
+a,
+a:visited {
+    color: var(--sec-color);
+}
+
+@media only screen and (min-width: 600px) {
+    header {
+        justify-content: start;
+    }
+
+    .cells {
+        width: 200px;
+        height: 200px;
+    }
+}
