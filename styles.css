@@ -15,6 +15,7 @@
 * {
     margin: 0px;
     padding: 0px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 body {
@@ -27,7 +28,6 @@ body {
 
 header,
 footer {
-    font-family: 'Josefin Sans', sans-serif;
     color: var(--sec-color);
     padding: 20px;
 }
@@ -38,11 +38,11 @@ header {
     background-color: var(--med-color);
 
     display: inherit;
-    justify-content: center;
+    justify-content: start;
 }
 
 main {
-    padding: 10px;
+    padding: 20px 0px;
 
     display: inherit;
     justify-content: center;
@@ -50,16 +50,31 @@ main {
     flex: 1;
 }
 
+#game-look {
+    width: max-content;
+    display: inherit;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
 #game-container {
     display: grid;
     grid-template: repeat(3, max-content) / repeat(3, max-content);
 }
 
-.cells {
-    width: calc(100vw/4);
-    height: calc(100vw/3);
+#game-message {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--sec-color);
+}
 
-    font-size: 7em;
+.cells {
+    width: 200px;
+    height: 200px;
+
+    font-size: 10em;
     font-family: "Abys", sans-serif;
     color: var(--sec-color);
 
@@ -86,6 +101,33 @@ main {
     border-right: 3px solid var(--sec-color);
 }
 
+.cell.X,
+.cell.O {
+    cursor: not-allowed;
+}
+
+button {
+    appearance: none;
+}
+
+button#restart {
+    padding: 15px;
+    width: max-content;
+
+    color: var(--sec-color);
+    font-size: 1em;
+    text-transform: uppercase;
+
+    background-color: var(--med-color);
+    border: none;
+    border-radius: 10px;
+}
+
+button#restart:hover {
+    color: rgba(224, 240, 106, 0.676);
+    background-color: rgba(44, 52, 106, 0.693);
+}
+
 footer {
     text-align: center;
 }
@@ -95,13 +137,14 @@ a:visited {
     color: var(--sec-color);
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (max-width: 600px) {
     header {
-        justify-content: start;
+        justify-content: center;
     }
 
     .cells {
-        width: 200px;
-        height: 200px;
+        width: calc(100vw/4);
+        height: calc(100vw/3);
+        font-size: 7em;
     }
 }
