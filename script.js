@@ -30,7 +30,7 @@ var Player = (symbol) => {
 var GameController = (() => {
     const _playerOne = Player('X');
     const _playerTwo = Player('O');
-    let currentPlayer = _playerOne.getSymbol();
+    let _isPlayerOne = true;
     
     const checkWins = (currentPlayer) => {
         const WINNING_COMBINATIONS = [
@@ -68,26 +68,26 @@ var GameController = (() => {
     }
 
     const _swapTurns = () => {
-        currentPlayer = currentPlayer == 'X' ? _playerTwo.getSymbol() : _playerOne.getSymbol();
+        _isPlayerOne = _isPlayerOne ? false : true;
         DisplayController.gameMessage();
     }
 
-    const currentSymbol = () => currentPlayer;
+    const currentSymbol = () => _isPlayerOne ? _playerOne.getSymbol() : _playerTwo.getSymbol();
 
     const handleClick = (e) => {
         const cell = e.target;
-        DisplayController.placeMark(cell, currentPlayer);
-        if (checkWins(currentPlayer)) {
-            DisplayController.endMessage(false, currentPlayer);
+        DisplayController.placeMark(cell, currentSymbol());
+        if (checkWins(currentSymbol())) {
+            DisplayController.endMessage(false, currentSymbol());
         } else if (isDraw()) {
-          DisplayController.endMessage(true, currentPlayer);
+          DisplayController.endMessage(true, currentSymbol());
         } else {
           _swapTurns();
         }
     }
 
     const startGame = () => {
-        currentPlayer = 'X';
+        _isPlayerOne = true;
         DisplayController.refreshCells();
     }
 

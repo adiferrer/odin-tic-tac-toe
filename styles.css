@@ -74,7 +74,7 @@ main {
     width: 200px;
     height: 200px;
 
-    font-size: 10em;
+    font-size: 12em;
     font-family: "Abys", sans-serif;
     color: var(--sec-color);
 
@@ -145,6 +145,6 @@ a:visited {
     .cells {
         width: calc(100vw/4);
         height: calc(100vw/3);
-        font-size: 7em;
+        font-size: 8.5em;
     }
 }
