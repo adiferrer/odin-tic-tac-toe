@@ -17,19 +17,25 @@ var GameBoard = (() => {
     };
 })();
 
-var Player = (symbol) => {
+var Player = (symbol, imgSrc) => {
     let _symbol = symbol;
+    let _imgSrc = imgSrc;
 
     const getSymbol = () => _symbol;
 
+    const getImage = () => {
+        return _imgSrc;
+    };
+
     return {
-        getSymbol
+        getSymbol,
+        getImage
     };
 };
 
 var GameController = (() => {
-    const _playerOne = Player('X');
-    const _playerTwo = Player('O');
+    const _playerOne = Player('Pika', 'pictures/pikachu.png');
+    const _playerTwo = Player('Mike', 'pictures/mike_wazowski.png');
     let _isPlayerOne = true;
     
     const checkWins = (currentPlayer) => {
@@ -61,7 +67,7 @@ var GameController = (() => {
     const isDraw = () => {
         const board = Array(9);
         for (let c = 0; c < 9; c++) {
-            if (GameBoard.getCell(c) == '') return false
+            if (GameBoard.getCell(c) == '') return false;
             board[c] = GameBoard.getCell(c);
         }
         return true;
@@ -74,9 +80,11 @@ var GameController = (() => {
 
     const currentSymbol = () => _isPlayerOne ? _playerOne.getSymbol() : _playerTwo.getSymbol();
 
+    const currentImg = () => _isPlayerOne ? _playerOne.getImage() : _playerTwo.getImage();
+
     const handleClick = (e) => {
         const cell = e.target;
-        DisplayController.placeMark(cell, currentSymbol());
+        DisplayController.placeMark(cell, currentSymbol(), currentImg());
         if (checkWins(currentSymbol())) {
             DisplayController.endMessage(false, currentSymbol());
         } else if (isDraw()) {
@@ -94,6 +102,7 @@ var GameController = (() => {
     return {
         checkWins,
         currentSymbol,
+        currentImg,
         handleClick,
         startGame
     };
@@ -113,7 +122,8 @@ var DisplayController = (() => {
         cells.forEach(cell => {
             cell.classList.remove('X');
             cell.classList.remove('O');
-            cell.textContent = '';
+            // cell.textContent = '';
+            if (cell.hasChildNodes()) cell.removeChild(cell.firstChild);
             cell.removeEventListener('click', GameController.handleClick);
             cell.addEventListener('click', GameController.handleClick, { once: true });
         });
@@ -125,9 +135,11 @@ var DisplayController = (() => {
         message.textContent = `It's ${GameController.currentSymbol()}'s turn!`;
     }
 
-    const placeMark = (cell, currentPlayer) => {
+    const placeMark = (cell, currentPlayer, imageSrc) => {
+        const img = document.createElement('img');
+        img.setAttribute('src', imageSrc);
         cell.classList.add(currentPlayer);
-        cell.textContent = currentPlayer;
+        cell.appendChild(img);
         GameBoard.setCell(Number(cell.dataset.cell), currentPlayer);
     }
 

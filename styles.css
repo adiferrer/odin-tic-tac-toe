@@ -1,44 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
-
-@font-face {
-    font-family: "Abys";
-    src: url("fonts/Abys-Regular.woff") format("woff"),
-    url("fonts/Abys-Regular.woff2") format("woff2");
-}
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;700&display=swap');
 
 :root {
-    --dark-color: rgb(39,39,39);
-    --med-color: rgb(44,52,106);
-    --sec-color: rgb(225,240,106);
+    --dark-color: rgb(53,91,109);
+    --dark-hover: rgba(53, 91, 109, 0.78);
+    --white-color: white;
+    --white-hover: rgba(255, 255, 255, 0.868);
+    --dirty-white: rgb(232,233,228);
 }
 
 * {
-    margin: 0px;
-    padding: 0px;
-    font-family: 'Josefin Sans', sans-serif;
+    margin: 0;
+    font-family: 'Barlow', sans-serif;
 }
 
 body {
     width: 100vw;
     height: 100vh;
-    background-color: var(--dark-color);
+    background-color: var(--dirty-white);
+
     display: flex;
     flex-direction: column;
 }
 
 header,
 footer {
-    color: var(--sec-color);
-    padding: 20px;
+    padding: 10px;
 }
 
 header {
-    font-weight: 700;
-    font-size: 2em;
-    background-color: var(--med-color);
-
     display: inherit;
     justify-content: start;
+}
+
+header > img {
+    filter: invert(32%) sepia(24%) saturate(896%) hue-rotate(154deg) brightness(88%) contrast(84%);
 }
 
 main {
@@ -51,11 +46,11 @@ main {
 }
 
 #game-look {
-    width: max-content;
+    width: 100vw;
     display: inherit;
     flex-direction: column;
     gap: 15px;
-    justify-content: center;
+
     align-items: center;
 }
 
@@ -67,7 +62,7 @@ main {
 #game-message {
     font-weight: 700;
     font-size: 1.8rem;
-    color: var(--sec-color);
+    color: var(--dark-color);
 }
 
 .cells {
@@ -76,29 +71,34 @@ main {
 
     font-size: 12em;
     font-family: "Abys", sans-serif;
-    color: var(--sec-color);
+    color: var(--dark-color);
 
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.cells > img {
+    width: 150px;
+    height: auto;
+}
+
 .cells:first-child,
 .cells:nth-child(2),
 .cells:nth-child(4),
 .cells:nth-child(5) {
-    border-bottom: 3px solid var(--sec-color);
-    border-right: 3px solid var(--sec-color);
+    border-bottom: 3px solid var(--dark-color);
+    border-right: 3px solid var(--dark-color);
 }
 
 .cells:nth-child(3),
 .cells:nth-child(6) {
-    border-bottom: 3px solid var(--sec-color);
+    border-bottom: 3px solid var(--dark-color);
 }
 
 .cells:nth-child(7),
 .cells:nth-child(8) {
-    border-right: 3px solid var(--sec-color);
+    border-right: 3px solid var(--dark-color);
 }
 
 .cell.X,
@@ -114,34 +114,36 @@ button#restart {
     padding: 15px;
     width: max-content;
 
-    color: var(--sec-color);
+    color: var(--white-color);
     font-size: 1em;
     text-transform: uppercase;
 
-    background-color: var(--med-color);
+    background-color: var(--dark-color);
     border: none;
     border-radius: 10px;
 }
 
 button#restart:hover {
-    color: rgba(224, 240, 106, 0.676);
-    background-color: rgba(44, 52, 106, 0.693);
+    color: var(--white-hover);
+    background-color: var(--dark-hover);
+}
+
+button#restart,
+footer {
+    font-weight: 300;
 }
 
 footer {
     text-align: center;
+    color: var(--dark-color);
 }
 
 a,
 a:visited {
-    color: var(--sec-color);
+    color: var(--dark-color);
 }
 
 @media only screen and (max-width: 600px) {
-    header {
-        justify-content: center;
-    }
-
     .cells {
         width: calc(100vw/4);
         height: calc(100vw/3);
