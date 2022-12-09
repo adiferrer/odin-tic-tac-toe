@@ -17,6 +17,30 @@
             <button type="button" id="multiplayer-mode">Multiplayer</button>
             <button type="button" id="ai-mode">Against AI</button>
         </div> -->
+        <div id="pregame-two">
+            <form action="" id="multiplay-form">
+                <p>Then, customize players:</p>
+                <div id="fieldsets">
+                    <fieldset>
+                        <h1>Player 1</h1>
+                        <div>
+                            <label for="playerOne-name">Name:</label>
+                            <input type="text" name="playerOne-name" id="playerOne-name" required/>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <h1>Player 2</h1>
+                        <div>
+                            <label for="playerTwo-name">Name:</label>
+                            <input type="text" name="playerTwo-name" id="playerTwo-name" required/>
+                        </div>
+                    </fieldset>
+                </div>
+                <div>
+                    <button type="submit" id="start">Start the game!</button>
+                </div>
+            </form>
+        </div>
         <div id="game-look">
             <p id="game-message"></p>
             <div id="game-container">
@@ -30,7 +54,10 @@
                 <div data-cell="7" class="cells"> </div>
                 <div data-cell="8" class="cells"> </div>
             </div>
-            <button type="button" id="restart">Restart</button>
+            <div>
+                <button type="button" id="new-game" class="game-btns">New Game</button>
+                <button type="button" id="refresh" class="game-btns">Refresh</button>
+            </div>
         </div>
     </main>
     <footer>

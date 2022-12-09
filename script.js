@@ -1,4 +1,11 @@
-var GameBoard = (() => {
+/**
+ * @module GameBoard - Represents the grid GameBoard of Tic-Tac-Toe.
+ * @var _gameBoard - private array consisting of 9 cells
+ * @function getCell - gets the cell
+ * @function setCell - sets the cell
+ * @returns getCell
+ */
+ var GameBoard = (() => {
     let _gameBoard = [
         '', '', '',
         '', '', '',
@@ -17,27 +24,44 @@ var GameBoard = (() => {
     };
 })();
 
-var Player = (symbol, imgSrc) => {
-    let _symbol = symbol;
+/**
+ * 
+ * @param {string} name - name of player
+ * @param {string} imgSrc - selected meme of player
+ * 
+ */
+var Player = (name, imgSrc) => {
+    let _name = name;
     let _imgSrc = imgSrc;
 
-    const getSymbol = () => _symbol;
+    const getName = () => _name;
 
     const getImage = () => {
         return _imgSrc;
     };
 
+    const setName = (newName) => _name = newName;
+
     return {
-        getSymbol,
-        getImage
+        getName,
+        getImage,
+        setName
     };
 };
 
+/**
+ * @module GameController - Controls the flow of the game itself
+ */
 var GameController = (() => {
-    const _playerOne = Player('Pika', 'pictures/pikachu.png');
-    const _playerTwo = Player('Mike', 'pictures/mike_wazowski.png');
+    const _playerOne = Player('One', 'pictures/pikachu.png');
+    const _playerTwo = Player('Two', 'pictures/mike_wazowski.png');
     let _isPlayerOne = true;
     
+    const setPlayers = (names) => {
+        _playerOne.setName(names[0]);
+        _playerTwo.setName(names[1]);
+    }
+
     const checkWins = (currentPlayer) => {
         const WINNING_COMBINATIONS = [
             // rows
@@ -64,7 +88,7 @@ var GameController = (() => {
         return false;
     }
 
-    const isDraw = () => {
+    const _isDraw = () => {
         const board = Array(9);
         for (let c = 0; c < 9; c++) {
             if (GameBoard.getCell(c) == '') return false;
@@ -78,51 +102,100 @@ var GameController = (() => {
         DisplayController.gameMessage();
     }
 
-    const currentSymbol = () => _isPlayerOne ? _playerOne.getSymbol() : _playerTwo.getSymbol();
+    const currentPlayer = () => _isPlayerOne ? _playerOne.getName() : _playerTwo.getName();
 
     const currentImg = () => _isPlayerOne ? _playerOne.getImage() : _playerTwo.getImage();
 
+    const currentTurn = () => _isPlayerOne ? 'p-one' : 'p-two';
+
     const handleClick = (e) => {
         const cell = e.target;
-        DisplayController.placeMark(cell, currentSymbol(), currentImg());
-        if (checkWins(currentSymbol())) {
-            DisplayController.endMessage(false, currentSymbol());
-        } else if (isDraw()) {
-          DisplayController.endMessage(true, currentSymbol());
+        DisplayController.placeMark(cell, currentImg());
+        if (checkWins(currentTurn())) {
+            DisplayController.endMessage(false, currentPlayer());
+        } else if (_isDraw()) {
+          DisplayController.endMessage(true, currentPlayer());
         } else {
           _swapTurns();
         }
     }
 
     const startGame = () => {
+        setPlayers(DisplayController.getNames());
         _isPlayerOne = true;
         DisplayController.refreshCells();
     }
 
+    const restart = () => {
+        setPlayers(['One', 'Two']);
+    }
+
     return {
         checkWins,
-        currentSymbol,
+        currentPlayer,
         currentImg,
+        currentTurn,
         handleClick,
-        startGame
+        startGame, 
+        restart
     };
 })();
 
+/**
+ * @module DisplayController - controls the display corresponding to the game flow
+ */
 var DisplayController = (() => {
+    const game = document.getElementById('game-look');
     const cells = document.querySelectorAll('.cells');
     const message = document.getElementById('game-message');
-    const restartBtn = document.getElementById('restart');
-    restartBtn.addEventListener('click', GameController.startGame);
+
+    const secWindow = document.getElementById('pregame-two');
+    const nameOne = document.getElementById('playerOne-name');
+    const nameTwo = document.getElementById('playerTwo-name');
+
+    const aiPlay = document.getElementById('ai-play');
+    const multiPlay = document.getElementById('multi-play');
+    
+    const newGameBtn = document.getElementById('new-game');
+    newGameBtn.addEventListener('click', GameController.startGame);
+    const refreshBtn = document.getElementById('refresh');
+    refreshBtn.addEventListener('click', () => {
+        game.style.display = 'none';
+        refreshCells();
+        GameController.restart();
+
+        nameOne.value = '';
+        nameTwo.value = '';
+        secWindow.style.display = 'inherit';
+        secondWindow();
+    });
+
+    // const firstWindow = () => {
+        
+    // }
+
+    const secondWindow = () => {
+        const form = document.querySelector("#multiplay-form");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+        
+            secWindow.style.display = 'none';
+            game.style.display = 'inherit';
+            GameController.startGame();
+        });
+    }
+
+    const getNames = () => {
+        return [nameOne.value, nameTwo.value];
+    }
 
     const refreshCells = () => {
         for (let c = 0; c < 9; c++) {
             GameBoard.setCell(c, '');
         }
-
         cells.forEach(cell => {
-            cell.classList.remove('X');
-            cell.classList.remove('O');
-            // cell.textContent = '';
+            cell.classList.remove('p-one');
+            cell.classList.remove('p-two');
             if (cell.hasChildNodes()) cell.removeChild(cell.firstChild);
             cell.removeEventListener('click', GameController.handleClick);
             cell.addEventListener('click', GameController.handleClick, { once: true });
@@ -132,31 +205,30 @@ var DisplayController = (() => {
     }
 
     const gameMessage = () => {
-        message.textContent = `It's ${GameController.currentSymbol()}'s turn!`;
+        message.textContent = `It's ${GameController.currentPlayer()}'s turn!`;
     }
 
-    const placeMark = (cell, currentPlayer, imageSrc) => {
+    const placeMark = (cell, imageSrc) => {
         const img = document.createElement('img');
         img.setAttribute('src', imageSrc);
-        cell.classList.add(currentPlayer);
+        cell.classList.add(GameController.currentTurn());
         cell.appendChild(img);
-        GameBoard.setCell(Number(cell.dataset.cell), currentPlayer);
+        GameBoard.setCell(Number(cell.dataset.cell), GameController.currentTurn());
     }
 
     const endMessage = (draw, player) => {
         if (draw) {
-            message.textContent = 'Draw!'
+            message.textContent = 'Draw!';
         } else {
-            message.textContent = `${player} Wins!`
+            message.textContent = `${player} Wins!`;
             cells.forEach(cell => cell.removeEventListener('click', GameController.handleClick));
         }
     }
 
-    // const _render = () => {
-    //     for (let c = 0; c < 9; c++) cells[c].textContent = GameBoard.getCell(c);
-    // }
-
     return {
+        // firstWindow,
+        secondWindow,
+        getNames,
         refreshCells,
         gameMessage,
         placeMark,
@@ -164,4 +236,4 @@ var DisplayController = (() => {
     };
 })();
 
-GameController.startGame();
+DisplayController.secondWindow();

@@ -8,6 +8,8 @@
     --dirty-white: rgb(232,233,228);
 }
 
+/* Global Selectors */
+
 * {
     margin: 0;
     font-family: 'Barlow', sans-serif;
@@ -27,15 +29,6 @@ footer {
     padding: 10px;
 }
 
-header {
-    display: inherit;
-    justify-content: start;
-}
-
-header > img {
-    filter: invert(32%) sepia(24%) saturate(896%) hue-rotate(154deg) brightness(88%) contrast(84%);
-}
-
 main {
     padding: 20px 0px;
 
@@ -45,9 +38,117 @@ main {
     flex: 1;
 }
 
+button,
+input {
+    appearance: none;
+}
+
+button {
+    padding: 15px;
+    width: max-content;
+    font-size: 1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10px;
+}
+
+button,
+footer {
+    font-weight: 300;
+}
+
+/* Header Selectors */
+header {
+    display: inherit;
+    justify-content: start;
+}
+
+header > img {
+    filter: invert(32%) sepia(24%) saturate(896%) hue-rotate(154deg) brightness(88%) contrast(84%);
+}
+
+/* Main Body Selectors */
+/* Pre-game window 2 (form) Selectors */
+#pregame-two {
+    width: calc(100vw/2);
+    height: calc(100vh/2);
+    padding: 15px;
+    background-color: var(--dark-color);
+
+    display: inherit;
+}
+
+#multiplay-form {
+    width: inherit;
+    height: inherit; 
+    color: var(--white-color);
+
+    display: inherit;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#multiplay-form > #fieldsets {
+    flex: 1;
+    display: inherit;
+}
+
+#fieldsets > fieldset {
+    flex: 1;
+    display: inherit;
+    flex-direction: column;
+    gap: 15px;
+
+    padding: 15px;
+    border: none;
+}
+
+#fieldsets > fieldset:first-of-type {
+    border-right: 3px solid var(--dirty-white);
+}
+
+#fieldsets > fieldset > h1 {
+    text-align: center;
+}
+
+#fieldsets > fieldset > div {
+    display: inherit;
+    align-items: center;
+    gap: 10px;
+}
+
+label {
+    font-size: 1.2em;
+}
+
+input {
+    font-size: 1em;
+    height: 12px;
+    padding: 7px;
+    flex: 1;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--dirty-white);
+}
+
+input:focus {
+    outline: none;
+    align-items: center;
+}
+
+#multiplay-form > div:nth-of-type(2) {
+    display: inherit;
+    justify-content: flex-end;
+}
+
+button#start {
+    background-color: var(--dirty-white);
+}
+
+/* Game Selectors */
 #game-look {
     width: 100vw;
-    display: inherit;
+    display: none;
     flex-direction: column;
     gap: 15px;
 
@@ -78,6 +179,11 @@ main {
     align-items: center;
 }
 
+.cells:hover,
+.cells:hover {
+    cursor: pointer;
+}
+
 .cells > img {
     width: 150px;
     height: auto;
@@ -101,37 +207,24 @@ main {
     border-right: 3px solid var(--dark-color);
 }
 
-.cell.X,
-.cell.O {
+.cells.p-one,
+.cells.p-one:hover,
+.cells.p-two,
+.cells.p-two:hover {
     cursor: not-allowed;
 }
 
-button {
-    appearance: none;
-}
-
-button#restart {
-    padding: 15px;
-    width: max-content;
-
+button.game-btns {
     color: var(--white-color);
-    font-size: 1em;
-    text-transform: uppercase;
-
     background-color: var(--dark-color);
-    border: none;
-    border-radius: 10px;
 }
 
-button#restart:hover {
+button.game-btns:hover {
     color: var(--white-hover);
     background-color: var(--dark-hover);
 }
 
-button#restart,
-footer {
-    font-weight: 300;
-}
+/* Footer Selectors */
 
 footer {
     text-align: center;
@@ -143,10 +236,20 @@ a:visited {
     color: var(--dark-color);
 }
 
+/* Media Query for screen width @ 600px */
 @media only screen and (max-width: 600px) {
     .cells {
         width: calc(100vw/4);
         height: calc(100vw/3);
         font-size: 8.5em;
+    }
+
+    .cells > img {
+        width: 0.6em;
+    }
+
+    button#restart:hover {
+        color: var(--white-color);
+        background-color: var(--dark-color);
     }
 }
