@@ -137,12 +137,20 @@ input {
 }
 
 input:focus {
-    outline: 3px solid var(--dirty-white);
+    outline: none;
+    box-shadow: 0 0 0 2pt var(--dirty-white);
     align-items: center;
 }
 
 button#start {
+    color: var(--dark-color);
     background-color: var(--dirty-white);
+}
+
+button#start:hover {
+    color: var(--dark-hover);
+    background-color: var(--white-hover);
+    cursor: pointer;
 }
 
 /* Game Selectors */
@@ -245,6 +253,11 @@ a:visited {
     #fieldsets > fieldset:first-of-type {
         border-right: none;
         border-bottom: 3px solid var(--dirty-white);
+    }
+
+    button#start:hover {
+        color: var(--dark-color);
+        background-color: var(--dirty-white);
     }
     
     .cells {
