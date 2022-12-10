@@ -68,24 +68,29 @@ header > img {
 }
 
 /* Main Body Selectors */
-/* Pre-game window 2 (form) Selectors */
-#pregame-two {
-    width: calc(100vw/2);
-    height: calc(100vh/2);
+ /* Pre-game window 2 (form) Selectors */
+ #pregame-two {
+    width: 80vw;
+    height: 70vh;
+    display: inherit;
     padding: 15px;
     background-color: var(--dark-color);
-
-    display: inherit;
 }
 
 #multiplay-form {
     width: inherit;
-    height: inherit; 
-    color: var(--white-color);
+    height: inherit;
 
     display: inherit;
     flex-direction: column;
     gap: 10px;
+
+    color: var(--white-color);
+}
+
+#multiplay-form > div:nth-of-type(2) {
+    display: inherit;
+    justify-content: flex-end;
 }
 
 #multiplay-form > #fieldsets {
@@ -98,17 +103,8 @@ header > img {
     display: inherit;
     flex-direction: column;
     gap: 15px;
-
     padding: 15px;
     border: none;
-}
-
-#fieldsets > fieldset:first-of-type {
-    border-right: 3px solid var(--dirty-white);
-}
-
-#fieldsets > fieldset > h1 {
-    text-align: center;
 }
 
 #fieldsets > fieldset > div {
@@ -117,28 +113,32 @@ header > img {
     gap: 10px;
 }
 
+#fieldsets > fieldset > h1 {
+    text-align: center;
+}
+
+#fieldsets > fieldset:first-of-type {
+    border-right: 3px solid var(--dirty-white);
+}
+
 label {
     font-size: 1.2em;
 }
 
 input {
-    font-size: 1em;
     height: 12px;
     padding: 7px;
-    flex: 1;
     border: none;
     border-radius: 12px;
-    background-color: var(--dirty-white);
+    background-color: rgb(85,123,141);
+    color: var(--dirty-white);
+    font-size: 1em;
+    flex: 1;
 }
 
 input:focus {
-    outline: none;
+    outline: 3px solid var(--dirty-white);
     align-items: center;
-}
-
-#multiplay-form > div:nth-of-type(2) {
-    display: inherit;
-    justify-content: flex-end;
 }
 
 button#start {
@@ -237,7 +237,16 @@ a:visited {
 }
 
 /* Media Query for screen width @ 600px */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
+    #multiplay-form > #fieldsets {
+        flex-direction: column;
+    }
+
+    #fieldsets > fieldset:first-of-type {
+        border-right: none;
+        border-bottom: 3px solid var(--dirty-white);
+    }
+    
     .cells {
         width: calc(100vw/4);
         height: calc(100vw/3);
@@ -248,7 +257,8 @@ a:visited {
         width: 0.6em;
     }
 
-    button#restart:hover {
+    button#new-game:hover,
+    button#refresh:hover {
         color: var(--white-color);
         background-color: var(--dark-color);
     }

@@ -178,10 +178,15 @@ var DisplayController = (() => {
         const form = document.querySelector("#multiplay-form");
         form.addEventListener("submit", function (event) {
             event.preventDefault();
-        
-            secWindow.style.display = 'none';
-            game.style.display = 'inherit';
-            GameController.startGame();
+            if (nameOne.value.toLowerCase() == nameTwo.value.toLowerCase()) {
+                alert('Names should not be the same!');
+            } else if (nameOne.value.length < 2 || nameTwo.value.length < 2) {
+                alert('Please type in a valid name with a minimum of 2 letters.');
+            } else {
+                secWindow.style.display = 'none';
+                game.style.display = 'inherit';
+                GameController.startGame();
+            }
         });
     }
 
